@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/octavelahatra/mini_projet_docker.git', branch: 'main'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                bat 'pip install -r mini_projet_docker/flask_app/requirements.txt'
+            }
+        }
+
+        stage('Tests') {
+            steps {
+                bat '"C:\\Users\\LAHATRA\\AppData\\Local\\Programs\\Python\\Python310\\python.exe" mini_projet_docker\\flask_app\\test.py'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t localhost:4000/flask_hello:latest mini_projet_docker/flask_app/'
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                bat 'docker push localhost:4000/flask_hello:latest'
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                bat 'kubectl apply -f mini_projet_docker/flask_app/kubernetes/deployement.yml'
+                bat 'kubectl apply -f mini_projet_docker/flask_app/kubernetes/service.yml'
+            }
+        }
+    }
+}
