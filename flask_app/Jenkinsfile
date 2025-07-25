@@ -16,7 +16,7 @@ pipeline {
 
         stage('Tests') {
             steps {
-                bat '"C:\\Users\\LAHATRA\\AppData\\Local\\Programs\\Python\\Python310\\python.exe" mini_projet_docker\\flask_app\\test.py'
+                bat '"C:\\Users\\elie donacien\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" mini_projet_docker\\flask_app\\test.py'
             }
         }
 
