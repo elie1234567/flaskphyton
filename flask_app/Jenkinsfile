@@ -16,13 +16,13 @@ pipeline {
 
         stage('Tests') {
             steps {
-                bat '"C:\\Users\\elie donacien\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" mini_projet_docker\\flask_app\\test.py'
+                bat '"C:\\Users\\elie donacien\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" flaskphyton\\flask_app\\test.py'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t localhost:4000/flask_hello:latest mini_projet_docker/flask_app/'
+                bat 'docker build -t localhost:4000/flask_hello:latest flaskphyton/flask_app/'
             }
         }
 
@@ -34,8 +34,8 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                bat 'kubectl apply -f mini_projet_docker/flask_app/kubernetes/deployement.yml'
-                bat 'kubectl apply -f mini_projet_docker/flask_app/kubernetes/service.yml'
+                bat 'kubectl apply -f flaskphyton/flask_app/kubernetes/deployement.yml'
+                bat 'kubectl apply -f flaskphyton/flask_app/kubernetes/service.yml'
             }
         }
     }
