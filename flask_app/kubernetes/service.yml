@@ -4,9 +4,10 @@ metadata:
   name: flask-service
 spec:
   selector:
-    app: flask
+    app: flask-app
   ports:
-    - protocol: TCP
-      port: 5000
-      targetPort: 5000
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000
+    nodePort: 30007
   type: NodePort
