@@ -11,12 +11,20 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                sh 'pip3 install -r flask_app/requirements.txt'
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install --upgrade pip
+                    pip install -r flask_app/requirements.txt
+                '''
             }
         }
         stage('Tests') {
             steps {
-                sh 'python3 flask_app/test.py'
+                sh '''
+                    . venv/bin/activate
+                    python3 flask_app/test.py
+                '''
             }
         }
         stage('Build Docker Image') {
