@@ -28,11 +28,14 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
-            steps {
-                sh 'eval $(minikube docker-env)'
-                sh 'docker build -t flask_hello:latest flask_app/'
-            }
-        }
+        steps {
+        sh '''
+            minikube status || exit 1
+            eval $(minikube docker-env)
+            docker build -t flask_hello:latest flask_app/
+        '''
+      }
+    }
         stage('Deploy to Kubernetes') {
             steps {
                 sh 'kubectl apply -f flask_app/kubernetes/deployment.yaml'
